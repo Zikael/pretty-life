@@ -19,8 +19,11 @@
 // Determine colour pairs
 #include <map>
 
-// std::max_element
+// std::max_element / std::count_if
 #include <algorithm>
+
+// std::accumulate
+#include <numeric>
 
 struct SCell
 {
@@ -70,6 +73,27 @@ void print(std::vector<std::vector<SCell>>& v, HANDLE h, long long int gen)
 
 	std::string genStr = "Generation: ";
 	genStr.append(std::to_string(gen));
+
+	// Let's find how many cells are alive
+	const int alive = std::accumulate
+	(
+		v.begin(), v.end(), 0,
+		[](int total, const std::vector<SCell>& inner)
+		{
+			return total + std::count_if
+			(
+				inner.begin(), inner.end(),
+				[](const SCell& cell) 
+				{ 
+					return cell.state == SCell::EState::ALIVE;
+				}
+			);
+		}
+	);
+
+
+	genStr.append(" | Alive: ");
+	genStr.append(std::to_string(alive));
 
 	LPCSTR lpGenStr = genStr.c_str();
 
