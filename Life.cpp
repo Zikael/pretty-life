@@ -29,8 +29,8 @@ struct SCell
 {
 	enum EState
 	{
-		ALIVE,
-		DEAD
+		DEAD,
+		ALIVE
 	} state;
 	WORD colour;
 
@@ -64,7 +64,7 @@ void print(std::vector<std::vector<SCell>>& v, HANDLE h, long long int gen)
 			}
 			else ::WriteConsoleOutputAttribute(h, &v[y][x].colour, 1, location, &written);
 
-			::WriteConsoleOutputCharacterA(h, v[y][x] == SCell::EState::ALIVE ? "x" : ".", 1, location, &written);
+			::WriteConsoleOutputCharacterA(h, v[y][x] == SCell::EState::ALIVE ? "x" : " ", 1, location, &written);
 		}
 	}
 
